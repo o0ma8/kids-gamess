@@ -121,7 +121,35 @@
       .difference-boards { grid-template-columns: 1fr; }
       .game-box { padding: 1rem; }
     }
-  </style>
+    /* خانات إعلانية فارغة مؤقتًا — ليست إعلانات Google فعلية */
+    .ad-placeholder {
+      display: grid;
+      place-items: center;
+      margin: 1.25rem auto;
+      padding: 1rem;
+      color: #667085;
+      background: #fff;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      text-align: center;
+      font-size: .9rem;
+    }
+    .ad-square {
+      width: min(100%, 300px);
+      min-height: 250px;
+    }
+    .ad-bottom {
+      position: fixed;
+      z-index: 10;
+      inset-inline: 0;
+      bottom: 0;
+      min-height: 60px;
+      margin: 0;
+      border-radius: 12px 12px 0 0;
+      background: #fff;
+      box-shadow: 0 -3px 14px rgba(0,0,0,.12);
+    }
+    body { padding-bottom: 75px; }  </style>
 </head>
 <body>
   <header>
@@ -194,7 +222,9 @@
       <div style="text-align:center;margin-top:1rem"><button id="newDifference" class="btn" type="button">لغز جديد</button></div>
     </section>
   </main>
-
+  <div class="ad-placeholder ad-bottom" aria-label="مساحة إعلانية سفلية">
+    مساحة إعلانية
+  </div>
   <footer><p>© 2026 عالم طفلي الذكي. جميع الحقوق محفوظة.</p></footer>
 
   <script>
