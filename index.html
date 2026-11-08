@@ -12,11 +12,12 @@
       --accent: #ffe66d;
       --dark: #2d3748;
       --light: #f7fafc;
+      --card: #ffffff;
+      --shadow: rgba(45, 55, 72, 0.12);
+      --good: #3ecf8e;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -34,12 +35,12 @@
 
     header h1 {
       margin: 0;
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 4vw, 3rem);
     }
 
     header p {
       font-size: 1.2rem;
-      margin-top: 0.5rem;
+      margin-top: 0.6rem;
     }
 
     .container {
@@ -55,13 +56,13 @@
     }
 
     .card {
-      background: white;
+      background: var(--card);
       border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 10px var(--shadow);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s;
+      transition: transform 0.2s ease;
     }
 
     .card:hover {
@@ -95,16 +96,88 @@
       background-color: var(--secondary);
       color: white;
       border: none;
-      padding: 0.75rem;
-      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 1rem;
       font-weight: bold;
       width: 100%;
+      transition: 0.2s ease;
     }
 
     .btn:hover {
-      background-color: #3bb3a9;
+      background-color: #35b0a9;
+    }
+
+    .game-box {
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 6px 16px var(--shadow);
+      padding: 1.2rem;
+      margin: 2rem 0;
+    }
+
+    .game-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .game-top h2 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .status {
+      background: #eefaf5;
+      color: #0d8a5b;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(70px, 1fr));
+      gap: 12px;
+      margin-top: 1rem;
+    }
+
+    .memory-card {
+      aspect-ratio: 1 / 1;
+      border: none;
+      background: linear-gradient(135deg, #ffb3b3, #ffd7a8);
+      border-radius: 14px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25);
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .memory-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .memory-card.flipped {
+      background: #fff;
+      color: var(--dark);
+      border: 2px solid #dfe7f5;
+    }
+
+    .memory-card.matched {
+      background: #dffaf0;
+      color: var(--good);
+      border: 2px solid #9fe0bd;
+      cursor: default;
     }
 
     footer {
@@ -113,6 +186,17 @@
       background-color: var(--dark);
       color: white;
       margin-top: 3rem;
+    }
+
+    @media (max-width: 500px) {
+      .memory-grid {
+        grid-template-columns: repeat(4, minmax(52px, 1fr));
+        gap: 10px;
+      }
+
+      .memory-card {
+        font-size: 1.7rem;
+      }
     }
   </style>
 </head>
@@ -124,7 +208,15 @@
   </header>
 
   <main class="container">
-    <h2>المنتجات الرقمية المتوفرة</h2>
+    <section class="game-box">
+      <div class="game-top">
+        <h2>🎮 لعبة الذاكرة</h2>
+        <div id="status" class="status">المحاولات: 0</div>
+      </div>
+      <div id="memoryBoard" class="memory-grid" aria-label="لعبة الذاكرة"></div>
+    </section>
+
+    <h2 style="margin-top: 1.5rem;">المنتجات الرقمية المتوفرة</h2>
 
     <div class="grid">
       <article class="card">
@@ -196,5 +288,103 @@
   <footer>
     <p>© 2026 عالم طفلي الذكي. جميع الحقوق محفوظة.</p>
   </footer>
+
+  <script>
+    const board = document.getElementById('memoryBoard');
+    const status = document.getElementById('status');
+
+    const icons = ['🐶', '🐱', '🦊', '🐼', '🐸', '🦄', '🌞', '⭐'];
+    let cards = [];
+    let firstCard = null;
+    let secondCard = null;
+    let attempts = 0;
+    let matches = 0;
+    let locked = false;
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function updateStatus() {
+      status.textContent = 'المحاولات: ' + attempts + ' | المطابقات: ' + matches + '/8';
+    }
+
+    function createBoard() {
+      cards = shuffle([...icons, ...icons]);
+      board.innerHTML = '';
+
+      cards.forEach((icon, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'memory-card';
+        btn.type = 'button';
+        btn.dataset.value = icon;
+        btn.dataset.index = index;
+        btn.textContent = '?';
+        btn.setAttribute('aria-label', 'بطاقة لعبة الذاكرة');
+
+        btn.addEventListener('click', () => flipCard(btn));
+        board.appendChild(btn);
+      });
+
+      firstCard = null;
+      secondCard = null;
+      attempts = 0;
+      matches = 0;
+      locked = false;
+      updateStatus();
+    }
+
+    function flipCard(card) {
+      if (locked || card === firstCard || card.classList.contains('matched') || card.classList.contains('flipped')) {
+        return;
+      }
+
+      card.textContent = card.dataset.value;
+      card.classList.add('flipped');
+
+      if (!firstCard) {
+        firstCard = card;
+        return;
+      }
+
+      secondCard = card;
+      attempts += 1;
+      updateStatus();
+
+      if (firstCard.dataset.value === secondCard.dataset.value) {
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        firstCard = null;
+        secondCard = null;
+        matches += 1;
+        updateStatus();
+
+        if (matches === icons.length) {
+          setTimeout(() => {
+            alert('أحسنت! انتهت اللعبة بنجاح 🎉');
+            createBoard();
+          }, 600);
+        }
+        return;
+      }
+
+      locked = true;
+      setTimeout(() => {
+        firstCard.textContent = '?';
+        secondCard.textContent = '?';
+        firstCard.classList.remove('flipped');
+        secondCard.classList.remove('flipped');
+        firstCard = null;
+        secondCard = null;
+        locked = false;
+      }, 700);
+    }
+
+    createBoard();
+  </script>
 </body>
 </html>
