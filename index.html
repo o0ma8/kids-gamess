@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>عالم طفلي الذكي | ألعاب وملفات رقمية</title>
-
+  <meta name="theme-color" content="#ff6b6b">
+  <title>عالم طفلي الذكي | ألعاب تعليمية</title>
   <style>
     :root {
       --primary: #ff6b6b;
@@ -12,379 +12,350 @@
       --accent: #ffe66d;
       --dark: #2d3748;
       --light: #f7fafc;
-      --card: #ffffff;
-      --shadow: rgba(45, 55, 72, 0.12);
-      --good: #3ecf8e;
+      --good: #168a5b;
+      --shadow: 0 6px 18px rgba(45, 55, 72, .12);
     }
-
     * { box-sizing: border-box; }
-
     body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      background-color: var(--light);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--light);
       color: var(--dark);
     }
-
     header {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       text-align: center;
-      padding: 2.5rem 1rem;
+      padding: 2rem 1rem;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: clamp(2rem, 4vw, 3rem);
-    }
-
-    header p {
-      font-size: 1.2rem;
-      margin-top: 0.6rem;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: 12px;
-      box-shadow: 0 4px 10px var(--shadow);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card-header {
-      background: var(--accent);
-      color: var(--dark);
-      padding: 1rem;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .card-body {
-      padding: 1.5rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .price {
-      font-size: 1.4rem;
-      color: var(--primary);
-      font-weight: bold;
-      margin: 1rem 0;
-    }
-
-    .btn {
-      background-color: var(--secondary);
-      color: white;
-      border: none;
-      padding: 0.8rem 1rem;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: bold;
-      width: 100%;
-      transition: 0.2s ease;
-    }
-
-    .btn:hover {
-      background-color: #35b0a9;
-    }
-
+    header h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); }
+    header p { font-size: 1.15rem; margin-bottom: 0; }
+    .container { max-width: 1050px; margin: 1.5rem auto; padding: 0 1rem; }
+    .intro { text-align: center; }
     .game-box {
-      background: white;
+      background: #fff;
       border-radius: 18px;
-      box-shadow: 0 6px 16px var(--shadow);
+      box-shadow: var(--shadow);
       padding: 1.2rem;
-      margin: 2rem 0;
+      margin: 1.4rem 0;
     }
-
     .game-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
+      gap: .75rem;
+      margin-bottom: .8rem;
     }
-
-    .game-top h2 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
-
+    .game-top h2 { margin: 0; font-size: 1.45rem; }
     .status {
+      display: inline-block;
       background: #eefaf5;
-      color: #0d8a5b;
-      padding: 0.55rem 0.9rem;
+      color: var(--good);
+      padding: .55rem .85rem;
       border-radius: 999px;
-      font-weight: bold;
-      font-size: 0.95rem;
+      font-weight: 700;
+      min-height: 2.4rem;
     }
-
+    .btn, .choice, .palette-button {
+      border: 0;
+      border-radius: 10px;
+      padding: .75rem 1rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .btn { background: var(--secondary); color: #fff; }
+    .btn:hover { background: #35b0a9; }
     .memory-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(70px, 1fr));
-      gap: 12px;
-      margin-top: 1rem;
+      grid-template-columns: repeat(4, minmax(50px, 1fr));
+      gap: 10px;
+      max-width: 520px;
+      margin: 1rem auto;
     }
-
     .memory-card {
-      aspect-ratio: 1 / 1;
-      border: none;
-      background: linear-gradient(135deg, #ffb3b3, #ffd7a8);
+      aspect-ratio: 1;
+      border: 2px solid transparent;
       border-radius: 14px;
-      font-size: 2rem;
-      font-weight: bold;
+      background: linear-gradient(135deg, #ffb3b3, #ffd7a8);
       color: white;
+      font-size: clamp(1.5rem, 7vw, 2.3rem);
       cursor: pointer;
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25);
-      transition: transform 0.2s ease, background 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-
-    .memory-card:hover {
-      transform: translateY(-2px);
+    .memory-card.flipped { background: #fff; color: var(--dark); border-color: #dfe7f5; }
+    .memory-card.matched { background: #dffaf0; color: var(--good); border-color: #9fe0bd; }
+    .prompt { font-size: 1.25rem; font-weight: 700; text-align: center; margin: 1.1rem 0; }
+    .choices { display: flex; justify-content: center; flex-wrap: wrap; gap: .7rem; }
+    .choice { background: #f1f5ff; color: var(--dark); min-width: 76px; font-size: 1.25rem; }
+    .choice:hover { background: #dce8ff; }
+    .choice:disabled { cursor: default; opacity: .8; }
+    .feedback { text-align: center; min-height: 1.8rem; font-weight: 700; margin: .7rem 0; }
+    .palette { display: flex; justify-content: center; flex-wrap: wrap; gap: .6rem; margin: 1rem 0; }
+    .palette-button {
+      width: 44px; height: 44px; padding: 0;
+      border: 3px solid white;
+      box-shadow: 0 0 0 1px #ccd3df;
     }
-
-    .memory-card.flipped {
-      background: #fff;
-      color: var(--dark);
-      border: 2px solid #dfe7f5;
+    .palette-button.selected { box-shadow: 0 0 0 3px var(--dark); }
+    .drawing-wrap { max-width: 440px; margin: auto; }
+    .drawing { width: 100%; height: auto; display: block; background: #eaf8ff; border-radius: 16px; }
+    .paintable { cursor: pointer; stroke: #344054; stroke-width: 4; stroke-linejoin: round; }
+    .paintable:focus { outline: 4px solid #2d3748; outline-offset: 3px; }
+    .difference-boards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .scene { border: 2px solid #e6ebf2; border-radius: 14px; padding: .8rem; text-align: center; }
+    .scene h3 { margin: .2rem 0 .7rem; }
+    .scene-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+    .scene-tile {
+      aspect-ratio: 1;
+      border: 2px solid #e9edf4;
+      border-radius: 12px;
+      background: #fff9e8;
+      font-size: clamp(1.5rem, 7vw, 2.3rem);
+      cursor: pointer;
     }
-
-    .memory-card.matched {
-      background: #dffaf0;
-      color: var(--good);
-      border: 2px solid #9fe0bd;
-      cursor: default;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background-color: var(--dark);
-      color: white;
-      margin-top: 3rem;
-    }
-
-    @media (max-width: 500px) {
-      .memory-grid {
-        grid-template-columns: repeat(4, minmax(52px, 1fr));
-        gap: 10px;
-      }
-
-      .memory-card {
-        font-size: 1.7rem;
-      }
+    .scene-tile:hover { background: #fff0be; }
+    footer { text-align: center; padding: 1.5rem; background: var(--dark); color: #fff; margin-top: 2rem; }
+    @media (max-width: 600px) {
+      .difference-boards { grid-template-columns: 1fr; }
+      .game-box { padding: 1rem; }
     }
   </style>
 </head>
-
 <body>
   <header>
     <h1>🧸 عالم طفلي الذكي</h1>
-    <p>ألعاب وأوراق عمل تدمج بين المتعة والتعلم لطفلك!</p>
+    <p>ألعاب بسيطة وممتعة للتعلّم والمرح!</p>
   </header>
 
   <main class="container">
-    <section class="game-box">
+    <p class="intro">اختاري لعبة وابدئي اللعب مباشرة — الألعاب مجانية وتعمل على الهاتف.</p>
+
+    <section class="game-box" aria-labelledby="memoryTitle">
       <div class="game-top">
-        <h2>🎮 لعبة الذاكرة</h2>
-        <div id="status" class="status">المحاولات: 0</div>
+        <h2 id="memoryTitle">🧠 لعبة الذاكرة</h2>
+        <span id="memoryStatus" class="status" aria-live="polite">المحاولات: 0 | المطابقات: 0/8</span>
       </div>
-      <div id="memoryBoard" class="memory-grid" aria-label="لعبة الذاكرة"></div>
+      <p>اضغطي على بطاقتين وابحثي عن الصورتين المتشابهتين.</p>
+      <div id="memoryBoard" class="memory-grid" aria-label="بطاقات لعبة الذاكرة"></div>
+      <button id="restartMemory" class="btn" type="button">إعادة لعبة الذاكرة</button>
     </section>
 
-    <h2 style="margin-top: 1.5rem;">المنتجات الرقمية المتوفرة</h2>
+    <section class="game-box" aria-labelledby="lettersTitle">
+      <div class="game-top">
+        <h2 id="lettersTitle">🔤 لعبة الحروف</h2>
+        <span id="quizScore" class="status" aria-live="polite">النقاط: 0</span>
+      </div>
+      <p id="quizPrompt" class="prompt"></p>
+      <div id="quizChoices" class="choices"></div>
+      <div id="quizFeedback" class="feedback" aria-live="polite"></div>
+      <div style="text-align:center"><button id="nextQuestion" class="btn" type="button" hidden>السؤال التالي</button></div>
+    </section>
 
-    <div class="grid">
-      <article class="card">
-        <div class="card-header">أوراق عمل</div>
-        <div class="card-body">
-          <div>
-            <h3>حقيبة التلوين والذكاء المبكر</h3>
-            <p>30 صفحة تفاعلية (متاهات وتوصيل نقاط) لعمر 3–5 سنوات.</p>
-          </div>
-          <div>
-            <div class="price">19 ر.س</div>
-            <button class="btn" onclick="alert('زر تجريبي — اربطه بصفحة الدفع عند تجهيزها.')">
-              شراء وتحميل فوراً
-            </button>
-          </div>
-        </div>
-      </article>
+    <section class="game-box" aria-labelledby="colorTitle">
+      <div class="game-top">
+        <h2 id="colorTitle">🎨 لعبة التلوين</h2>
+        <span class="status">اختاري لونًا ثم اضغطي على أجزاء الرسمة</span>
+      </div>
+      <div id="palette" class="palette" aria-label="اختيار لون"></div>
+      <div class="drawing-wrap">
+        <svg class="drawing" viewBox="0 0 400 300" role="img" aria-label="رسمة بيت وشجرة وشمس للتلوين">
+          <rect x="0" y="235" width="400" height="65" fill="#b7ebc6" />
+          <circle class="paintable" data-part="sun" cx="330" cy="55" r="32" fill="#ffe66d" role="button" tabindex="0" aria-label="الشمس" />
+          <rect class="paintable" data-part="house" x="80" y="125" width="180" height="125" fill="#ffb3b3" role="button" tabindex="0" aria-label="جدار البيت" />
+          <path class="paintable" data-part="roof" d="M60 132 L170 45 L280 132 Z" fill="#ff6b6b" role="button" tabindex="0" aria-label="سقف البيت" />
+          <rect class="paintable" data-part="door" x="150" y="180" width="42" height="70" fill="#b8895b" role="button" tabindex="0" aria-label="باب البيت" />
+          <rect class="paintable" data-part="window" x="98" y="155" width="38" height="38" fill="#a8e7ff" role="button" tabindex="0" aria-label="نافذة البيت" />
+          <rect class="paintable" data-part="window" x="206" y="155" width="38" height="38" fill="#a8e7ff" role="button" tabindex="0" aria-label="نافذة البيت" />
+          <rect class="paintable" data-part="trunk" x="310" y="177" width="25" height="72" fill="#a8754f" role="button" tabindex="0" aria-label="جذع الشجرة" />
+          <circle class="paintable" data-part="leaves" cx="322" cy="155" r="42" fill="#69c779" role="button" tabindex="0" aria-label="أوراق الشجرة" />
+        </svg>
+      </div>
+      <div class="feedback">اضغطي على لون لتحديده، ثم على جزء من الرسمة لتلوينه.</div>
+      <div style="text-align:center"><button id="resetColoring" class="btn" type="button">إعادة الألوان الأصلية</button></div>
+    </section>
 
-      <article class="card">
-        <div class="card-header">تأسيس وتعليم</div>
-        <div class="card-body">
-          <div>
-            <h3>بطاقات الحروف والأرقام العربية</h3>
-            <p>بطاقات ملونة ومبتكرة لتعلم الحروف والأرقام بكل سهولة.</p>
-          </div>
-          <div>
-            <div class="price">15 ر.س</div>
-            <button class="btn" onclick="alert('زر تجريبي — اربطه بصفحة الدفع عند تجهيزها.')">
-              شراء وتحميل فوراً
-            </button>
-          </div>
+    <section class="game-box" aria-labelledby="differenceTitle">
+      <div class="game-top">
+        <h2 id="differenceTitle">🔎 اكتشفي الاختلاف</h2>
+        <span id="differenceStatus" class="status" aria-live="polite">ابحثي عن صورة مختلفة في اللوحة اليمنى</span>
+      </div>
+      <div class="difference-boards">
+        <div class="scene">
+          <h3>الصورة الأولى</h3>
+          <div id="sceneOne" class="scene-grid"></div>
         </div>
-      </article>
-
-      <article class="card">
-        <div class="card-header">ألعاب ذهنية</div>
-        <div class="card-body">
-          <div>
-            <h3>لعبة «اكتشف الاختلاف»</h3>
-            <p>تحديات بصرية ممتعة لتنمية التركيز وقوة الملاحظة.</p>
-          </div>
-          <div>
-            <div class="price">12 ر.س</div>
-            <button class="btn" onclick="alert('زر تجريبي — اربطه بصفحة الدفع عند تجهيزها.')">
-              شراء وتحميل فوراً
-            </button>
-          </div>
+        <div class="scene">
+          <h3>الصورة الثانية — اضغطي على الاختلاف</h3>
+          <div id="sceneTwo" class="scene-grid"></div>
         </div>
-      </article>
-
-      <article class="card">
-        <div class="card-header">تنظيم وسلوك</div>
-        <div class="card-body">
-          <div>
-            <h3>جدول المهام اليومية المحفز</h3>
-            <p>جدول مكافآت بصري لتشجيع الأطفال على الالتزام والإنجاز.</p>
-          </div>
-          <div>
-            <div class="price">9 ر.س</div>
-            <button class="btn" onclick="alert('زر تجريبي — اربطه بصفحة الدفع عند تجهيزها.')">
-              شراء وتحميل فوراً
-            </button>
-          </div>
-        </div>
-      </article>
-    </div>
+      </div>
+      <div style="text-align:center;margin-top:1rem"><button id="newDifference" class="btn" type="button">لغز جديد</button></div>
+    </section>
   </main>
 
-  <footer>
-    <p>© 2026 عالم طفلي الذكي. جميع الحقوق محفوظة.</p>
-  </footer>
+  <footer><p>© 2026 عالم طفلي الذكي. جميع الحقوق محفوظة.</p></footer>
 
   <script>
-    const board = document.getElementById('memoryBoard');
-    const status = document.getElementById('status');
+    // لعبة الذاكرة
+    const memoryBoard = document.getElementById('memoryBoard');
+    const memoryStatus = document.getElementById('memoryStatus');
+    const memoryIcons = ['🐶', '🐱', '🦊', '🐼', '🐸', '🦄', '🌞', '⭐'];
+    let firstCard = null, secondCard = null, attempts = 0, matches = 0, memoryLocked = false;
 
-    const icons = ['🐶', '🐱', '🦊', '🐼', '🐸', '🦄', '🌞', '⭐'];
-    let cards = [];
-    let firstCard = null;
-    let secondCard = null;
-    let attempts = 0;
-    let matches = 0;
-    let locked = false;
-
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
+    function shuffle(items) {
+      for (let i = items.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [items[i], items[j]] = [items[j], items[i]];
       }
-      return array;
+      return items;
     }
-
-    function updateStatus() {
-      status.textContent = 'المحاولات: ' + attempts + ' | المطابقات: ' + matches + '/8';
+    function updateMemoryStatus() {
+      memoryStatus.textContent = `المحاولات: ${attempts} | المطابقات: ${matches}/8`;
     }
-
-    function createBoard() {
-      cards = shuffle([...icons, ...icons]);
-      board.innerHTML = '';
-
-      cards.forEach((icon, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'memory-card';
-        btn.type = 'button';
-        btn.dataset.value = icon;
-        btn.dataset.index = index;
-        btn.textContent = '?';
-        btn.setAttribute('aria-label', 'بطاقة لعبة الذاكرة');
-
-        btn.addEventListener('click', () => flipCard(btn));
-        board.appendChild(btn);
+    function startMemory() {
+      firstCard = null; secondCard = null; attempts = 0; matches = 0; memoryLocked = false;
+      memoryBoard.replaceChildren();
+      shuffle([...memoryIcons, ...memoryIcons]).forEach((icon) => {
+        const card = document.createElement('button');
+        card.type = 'button'; card.className = 'memory-card'; card.textContent = '?';
+        card.dataset.value = icon; card.setAttribute('aria-label', 'بطاقة مخفية');
+        card.addEventListener('click', () => flipMemoryCard(card));
+        memoryBoard.appendChild(card);
       });
-
-      firstCard = null;
-      secondCard = null;
-      attempts = 0;
-      matches = 0;
-      locked = false;
-      updateStatus();
+      updateMemoryStatus();
     }
-
-    function flipCard(card) {
-      if (locked || card === firstCard || card.classList.contains('matched') || card.classList.contains('flipped')) {
-        return;
-      }
-
+    function flipMemoryCard(card) {
+      if (memoryLocked || card === firstCard || card.classList.contains('matched')) return;
       card.textContent = card.dataset.value;
       card.classList.add('flipped');
-
-      if (!firstCard) {
-        firstCard = card;
-        return;
-      }
-
-      secondCard = card;
-      attempts += 1;
-      updateStatus();
-
+      card.setAttribute('aria-label', card.dataset.value);
+      if (!firstCard) { firstCard = card; return; }
+      secondCard = card; attempts++;
       if (firstCard.dataset.value === secondCard.dataset.value) {
-        firstCard.classList.add('matched');
-        secondCard.classList.add('matched');
-        firstCard = null;
-        secondCard = null;
-        matches += 1;
-        updateStatus();
-
-        if (matches === icons.length) {
-          setTimeout(() => {
-            alert('أحسنت! انتهت اللعبة بنجاح 🎉');
-            createBoard();
-          }, 600);
-        }
-        return;
+        firstCard.classList.add('matched'); secondCard.classList.add('matched');
+        firstCard = null; secondCard = null; matches++; updateMemoryStatus();
+        if (matches === memoryIcons.length) setTimeout(() => alert('أحسنت! أكملتِ لعبة الذاكرة 🎉'), 250);
+      } else {
+        memoryLocked = true; updateMemoryStatus();
+        setTimeout(() => {
+          firstCard.textContent = '?'; secondCard.textContent = '?';
+          firstCard.classList.remove('flipped'); secondCard.classList.remove('flipped');
+          firstCard.setAttribute('aria-label', 'بطاقة مخفية'); secondCard.setAttribute('aria-label', 'بطاقة مخفية');
+          firstCard = null; secondCard = null; memoryLocked = false;
+        }, 750);
       }
-
-      locked = true;
-      setTimeout(() => {
-        firstCard.textContent = '?';
-        secondCard.textContent = '?';
-        firstCard.classList.remove('flipped');
-        secondCard.classList.remove('flipped');
-        firstCard = null;
-        secondCard = null;
-        locked = false;
-      }, 700);
+      updateMemoryStatus();
     }
+    document.getElementById('restartMemory').addEventListener('click', startMemory);
+    startMemory();
 
-    createBoard();
+    // لعبة الحروف
+    const questions = [
+      { prompt: 'أي حرف تبدأ به كلمة «أسد»؟', answer: 'أ', choices: ['أ', 'ب', 'ت'] },
+      { prompt: 'أي حرف تبدأ به كلمة «تفاحة»؟', answer: 'ت', choices: ['ج', 'ت', 'م'] },
+      { prompt: 'أي حرف تبدأ به كلمة «بطة»؟', answer: 'ب', choices: ['ب', 'س', 'ن'] },
+      { prompt: 'أي حرف تبدأ به كلمة «حصان»؟', answer: 'ح', choices: ['خ', 'ح', 'د'] },
+      { prompt: 'أي حرف تبدأ به كلمة «قمر»؟', answer: 'ق', choices: ['ف', 'ق', 'ك'] }
+    ];
+    let questionIndex = 0, quizPoints = 0, answered = false;
+    const quizPrompt = document.getElementById('quizPrompt');
+    const quizChoices = document.getElementById('quizChoices');
+    const quizFeedback = document.getElementById('quizFeedback');
+    const nextQuestion = document.getElementById('nextQuestion');
+    function showQuestion() {
+      const q = questions[questionIndex % questions.length];
+      answered = false; quizPrompt.textContent = q.prompt; quizFeedback.textContent = '';
+      nextQuestion.hidden = true; quizChoices.replaceChildren();
+      shuffle([...q.choices]).forEach((choice) => {
+        const button = document.createElement('button');
+        button.type = 'button'; button.className = 'choice'; button.textContent = choice;
+        button.addEventListener('click', () => {
+          if (answered) return;
+          answered = true;
+          [...quizChoices.children].forEach((item) => item.disabled = true);
+          if (choice === q.answer) { quizPoints++; quizFeedback.textContent = 'إجابة صحيحة! أحسنتِ 🌟'; }
+          else { quizFeedback.textContent = `حاولي مرة أخرى في السؤال القادم. الإجابة الصحيحة: ${q.answer}`; }
+          document.getElementById('quizScore').textContent = `النقاط: ${quizPoints}`;
+          nextQuestion.hidden = false;
+        });
+        quizChoices.appendChild(button);
+      });
+    }
+    nextQuestion.addEventListener('click', () => { questionIndex++; showQuestion(); });
+    showQuestion();
+
+    // لعبة التلوين
+    const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#a78bfa', '#69c779', '#ff9f43', '#a8e7ff', '#b8895b'];
+    let selectedColor = colors[0];
+    const palette = document.getElementById('palette');
+    colors.forEach((color, index) => {
+      const button = document.createElement('button');
+      button.type = 'button'; button.className = 'palette-button' + (index === 0 ? ' selected' : '');
+      button.style.backgroundColor = color; button.setAttribute('aria-label', `اختيار اللون ${index + 1}`);
+      button.addEventListener('click', () => {
+        selectedColor = color;
+        palette.querySelectorAll('.palette-button').forEach((item) => item.classList.remove('selected'));
+        button.classList.add('selected');
+      });
+      palette.appendChild(button);
+    });
+    const colorableParts = document.querySelectorAll('.paintable');
+    colorableParts.forEach((part) => {
+      const paint = () => part.setAttribute('fill', selectedColor);
+      part.addEventListener('click', paint);
+      part.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); paint(); }
+      });
+    });
+    const originalColors = ['#ffe66d', '#ffb3b3', '#ff6b6b', '#b8895b', '#a8e7ff', '#a8e7ff', '#a8754f', '#69c779'];
+    document.getElementById('resetColoring').addEventListener('click', () => {
+      colorableParts.forEach((part, index) => part.setAttribute('fill', originalColors[index]));
+    });
+
+    // لعبة اكتشاف الاختلاف: اختلاف واحد في اللوحة الثانية.
+    const sceneOne = document.getElementById('sceneOne');
+    const sceneTwo = document.getElementById('sceneTwo');
+    const differenceStatus = document.getElementById('differenceStatus');
+    const sceneSets = [
+      ['🐶', '🐱', '🐰', '🐻', '🐸', '🦊', '🐼', '🐵', '🐯'],
+      ['🍎', '🍌', '🍇', '🍓', '🍉', '🍐', '🍊', '🍒', '🍍'],
+      ['🚗', '🚲', '🚌', '🚕', '🚂', '🚁', '🚒', '🚜', '🚀']
+    ];
+    let foundDifference = false;
+    function newDifferencePuzzle() {
+      const original = [...sceneSets[Math.floor(Math.random() * sceneSets.length)]];
+      const altered = [...original];
+      const position = Math.floor(Math.random() * original.length);
+      const replacements = { '🐶':'🐱', '🐱':'🐶', '🐰':'🐹', '🐻':'🐼', '🐸':'🐢', '🦊':'🐺', '🐼':'🐨', '🐵':'🙉', '🐯':'🦁', '🍎':'🍅', '🍌':'🌽', '🍇':'🫐', '🍓':'🍒', '🍉':'🎾', '🍐':'🥑', '🍊':'🍋', '🍒':'🍓', '🍍':'🥭', '🚗':'🚕', '🚲':'🛴', '🚌':'🚎', '🚕':'🚙', '🚂':'🚃', '🚁':'🛸', '🚒':'🚑', '🚜':'🚛', '🚀':'✈️' };
+      altered[position] = replacements[altered[position]] || '✨';
+      foundDifference = false;
+      differenceStatus.textContent = 'ابحثي عن صورة مختلفة في اللوحة اليمنى';
+      sceneOne.replaceChildren(); sceneTwo.replaceChildren();
+      original.forEach((emoji) => {
+        const tile = document.createElement('div'); tile.className = 'scene-tile'; tile.textContent = emoji; tile.setAttribute('aria-hidden', 'true'); sceneOne.appendChild(tile);
+      });
+      altered.forEach((emoji, index) => {
+        const tile = document.createElement('button'); tile.type = 'button'; tile.className = 'scene-tile'; tile.textContent = emoji;
+        tile.setAttribute('aria-label', `الصورة ${index + 1}`);
+        tile.addEventListener('click', () => {
+          if (foundDifference) return;
+          if (index === position) {
+            foundDifference = true;
+            differenceStatus.textContent = 'صحيح! وجدتِ الاختلاف 🎉';
+            tile.style.background = '#dffaf0';
+          } else {
+            differenceStatus.textContent = 'ليست هذه، جرّبي مرة أخرى';
+            tile.style.background = '#ffe0e0';
+            setTimeout(() => { if (!foundDifference) tile.style.background = ''; }, 450);
+          }
+        });
+        sceneTwo.appendChild(tile);
+      });
+    }
+    document.getElementById('newDifference').addEventListener('click', newDifferencePuzzle);
+    newDifferencePuzzle();
   </script>
 </body>
 </html>
